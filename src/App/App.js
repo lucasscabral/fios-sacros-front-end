@@ -6,8 +6,16 @@ import RegistrationScreen from "../components/authentication/registrationScreen"
 import "../assets/style/reset.css"
 
 function App() {
+  const [token, setToken] = useState("")
+  const [dataUser, setDataUser] = useState({
+    id: "",
+    name: "",
+    profile_url: "",
+  })
+
+  console.log(dataUser)
   return (
-    <useContextAPI.Provider>
+    <useContextAPI.Provider value={{ token, setToken, dataUser, setDataUser }}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LoginScreen />} />
