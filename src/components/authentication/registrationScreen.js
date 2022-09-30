@@ -12,8 +12,8 @@ import Container from '@mui/material/Container/';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CircularLoading from "../../utils/buttonLoading";
 import Alert from '@mui/material/Alert';
-import Stack from '@mui/material/Stack';
 import axios from "axios"
+import API_URL from "../../utils/apiUrl";
 
 const theme = createTheme();
 
@@ -36,26 +36,22 @@ export default function RegistrationScreen() {
             password: data.get('password'),
         }
 
-        const API_URL = process.env.REACT_APP_API_URL;
-        console.log(API_URL)
         const promise = axios.post(`${API_URL}/signup`, bodyRegistration)
-        console.log(promise)
         promise.then(_ => {
             setLoadingButtonForm(false)
             navigate("/")
-        }).catch(error => {
-            console.log(error)
+        }).catch(_ => {
             setLoadingButtonForm(false)
             setErrorSignUp(true)
             setTimeout(() => {
                 setErrorSignUp(false)
-            }, 2000)
+            }, 4000)
         })
     };
 
     return (
         <ThemeProvider theme={theme}>
-            {!errorSignUp ? "" : <Alert severity="error" style={{ m: 1, position: "fixed", top: "0", right: "0" }}>This is an error alert — check it out!</Alert>}
+            {!errorSignUp ? "" : <Alert severity="error" style={{ m: 1, position: "fixed", top: "0", right: "0" }}>Erro ao tentar cadastrar-se,verifique todos os dados!</Alert>}
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
                 <Box
