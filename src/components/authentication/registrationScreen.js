@@ -39,7 +39,7 @@ export default function RegistrationScreen() {
         const promise = axios.post(`${API_URL}/signup`, bodyRegistration)
         promise.then(_ => {
             setLoadingButtonForm(false)
-            navigate("/")
+            navigate("/signin")
         }).catch(_ => {
             setLoadingButtonForm(false)
             setErrorSignUp(true)
@@ -143,7 +143,7 @@ export default function RegistrationScreen() {
                         <Grid container justifyContent="flex-end">
                             <Grid item>
 
-                                <LinkRouter to={loadingButtonForm ? "" : "/"} style={{ textDecoration: "none" }}>
+                                <LinkRouter to={loadingButtonForm ? "" : "/signin"} style={{ textDecoration: "none" }}>
                                     <Link style={{ textDecoration: "none" }}>
                                         já tem uma conta? Entrar
                                     </Link>
