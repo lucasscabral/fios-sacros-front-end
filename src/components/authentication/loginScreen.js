@@ -21,7 +21,7 @@ const theme = createTheme();
 export default function SignIn() {
     const [loadingButtonForm, setLoadingButtonForm] = React.useState(false)
     const [errorSignUp, setErrorSignUp] = React.useState(false)
-    const { setToken, dataUser, setDataUser } = React.useContext(useContextAPI)
+    const { setToken, dataUser } = React.useContext(useContextAPI)
     const navigate = useNavigate()
 
     const handleSubmit = (event) => {
@@ -35,15 +35,14 @@ export default function SignIn() {
 
         const promise = axios.post(`${API_URL}/signin`, bodySignIn)
         promise.then((res) => {
-            setDataUser(dataUser.id = res.data.id)
-            setDataUser(dataUser.name = res.data.name)
-            setDataUser(dataUser.profile_url = res.data.profile_url)
+            dataUser.id = res.data.id
+            dataUser.name = res.data.name
+            dataUser.profile_url = res.data.profile_url
             setToken(res.data.token)
             localStorage.setItem("token", res.data.token)
             setLoadingButtonForm(false)
-            navigate("/home")
-        }).catch((error) => {
-            console.log(error)
+            navigate("/")
+        }).catch((_) => {
             setLoadingButtonForm(false)
             setErrorSignUp(true)
             setTimeout(() => {
@@ -113,7 +112,7 @@ export default function SignIn() {
                                 {""}
                             </Grid>
                             <Grid item >
-                                <LinkRouter to={"/signup"} style={{ textDecoration: "none" }}>
+                                <LinkRouter to={loadingButtonForm ? "" : "/signup"} style={{ textDecoration: "none" }}>
                                     <Link variant="body2" style={{ textDecoration: "none" }}>
                                         {"Não tem uma conta? Inscrever-se"}
                                     </Link>
