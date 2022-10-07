@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState, useContext, useEffect } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -13,18 +13,23 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Logo from "../../assets/images/logo-fios-sacros.png"
 import useContextAPI from '../../contexts/useContext';
+import LocalGroceryStoreOutlinedIcon from '@mui/icons-material/LocalGroceryStoreOutlined';
+import axios from "axios";
+import API_URL from '../../utils/apiUrl';
 import { Link } from 'react-router-dom';
 
-const pages = ['Products', 'Category'];
+const pages = ['Category'];
 const settings = ['Profile', 'Logout'];
 const authentication = ['SignIn', 'SignUp'];
-const category = ['bonecas', 'pinturas', 'roupas']
 
-const ResponsiveAppBar = () => {
-    const [anchorElNav, setAnchorElNav] = React.useState(null);
-    const [anchorElUser, setAnchorElUser] = React.useState(null);
-    const { token, setToken, dataUser } = React.useContext(useContextAPI)
-    const [anchorEl, setAnchorEl] = React.useState(null);
+
+const NavBar = () => {
+    const [anchorElNav, setAnchorElNav] = useState(null);
+    const [anchorElUser, setAnchorElUser] = useState(null);
+    const { token, setToken, dataUser, categories, setCategories } = useContext(useContextAPI)
+    const [anchorEl, setAnchorEl] = useState(null);
+
+
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -33,13 +38,10 @@ const ResponsiveAppBar = () => {
         setAnchorEl(null);
     };
 
-
     const handleOpenNavMenu = (event) => {
-        console.log(event)
         setAnchorElNav(event.currentTarget);
     };
     const handleOpenUserMenu = (event) => {
-        console.log(event)
         setAnchorElUser(event.currentTarget);
     };
 
@@ -56,15 +58,29 @@ const ResponsiveAppBar = () => {
         }
     }
 
+    useEffect(() => {
+        const getAllCategories = axios.get(`${API_URL}/categories`)
+        getAllCategories.then((res) => {
+            const categorias = res.data
+            setCategories(categorias)
+        }).catch((_) => {
+            alert("Falha ao tentar buscar todas as categorias")
+        })
+
+
+    }, [])
+
+
+
     return (
-        <AppBar position="static">
+        <AppBar position="fixed" style={{ backgroundColor: "lightpink" }}>
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     <Typography
                         variant="h6"
                         noWrap
                         component="a"
-                        href="/"
+
                         sx={{
                             mr: 2,
                             display: { xs: 'none', md: 'flex' },
@@ -75,7 +91,9 @@ const ResponsiveAppBar = () => {
                             textDecoration: 'none',
                         }}
                     >
-                        <Avatar alt='logo' src={Logo} sx={{ width: 60, height: 60 }} />
+                        <Link to={"/"}>
+                            <Avatar alt='logo' src={Logo} sx={{ width: 60, height: 60 }} />
+                        </Link>
                     </Typography>
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -172,19 +190,26 @@ const ResponsiveAppBar = () => {
                                             'aria-labelledby': 'button-category',
                                         }}
                                     >
-                                        {category.map((category) => (
-                                            <MenuItem key={category} onClick={handleClose}>
-                                                <Typography textAlign="center" >{category}</Typography>
+                                        {categories?.map((category) => (
+                                            <MenuItem key={category?.id} onClick={handleClose}>
+                                                <Typography textAlign="center" >{category?.name}</Typography>
                                             </MenuItem>
                                         ))}
                                     </Menu>
                                 </>
                         ))}
                     </Box>
+                    <Box sx={{ flexGrow: 0, marginRight: 3 }}>
+                        <IconButton >
+                            <Link to={"/shopping-cart"}>
+                                <LocalGroceryStoreOutlinedIcon sx={{ m: 1, width: 35, height: 35, color: "white" }} />
+                            </Link>
+                        </IconButton>
+                    </Box>
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                {token === "" ? <Avatar alt="Remy Sharp" sx={{ m: 1, bgcolor: 'lightgray', width: 50, height: 50 }} /> : <Avatar alt="logado" src={dataUser?.profile_url} sx={{ width: 50, height: 50 }} />}
+                                {token === "" ? <Avatar alt="Profile" sx={{ m: 1, bgcolor: 'lightgray', width: 50, height: 50 }} /> : <Avatar alt="logado" src={dataUser?.profile_url} sx={{ width: 50, height: 50 }} />}
                             </IconButton>
                         </Tooltip>
                         <Menu
@@ -220,7 +245,7 @@ const ResponsiveAppBar = () => {
                     </Box>
                 </Toolbar>
             </Container>
-        </AppBar>
+        </AppBar >
     );
 };
-export default ResponsiveAppBar;
+export default NavBar;
