@@ -1,19 +1,62 @@
-import ResponsiveAppBar from "../navBar/navBar"
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
+import { useEffect, useState, useContext } from 'react';
+import NavBar from "../navBar/navBar"
+import styled from "styled-components"
 import Foto from "../../assets/images/logo-fios-sacros.png"
-import { Box } from "@mui/material";
+import { Button, useMediaQuery } from '@mui/material';
+import "../../assets/style/fonts.css"
+import axios from "axios"
+import API_URL from '../../utils/apiUrl';
+import ListAllProducts from './listProducts.js';
 
 export default function HomeScreen() {
+    const [allProducts, setAllProducts] = useState()
+
+    const matches = useMediaQuery('(max-width:600px)');
+    useEffect(() => {
+        const getAllProducts = axios.get(`${API_URL}/products`)
+        getAllProducts.then((res) => {
+            const products = res.data
+            setAllProducts(products)
+        }).catch(() => {
+            alert("Falha ao tentar buscar todos os produtos")
+        })
+
+    }, [])
+
+
     return (
         <>
-            <ResponsiveAppBar />
-            <Container maxWidth="xl" style={{ height: "100vh" }}>
-                <Box sx={{ flexGrow: 1 }} style={{ width: "100%", backgroundColor: "red" }}>
-                    {/* <Typography textAlign="center">AQUI VEM OS PRODUTOS</Typography> */}
-                    {/* <img src={Foto} style={{ width: "100%", maxHeight: "400px" }} /> */}
-                </Box>
-            </Container>
+            <NavBar />
+            <Baner>
+                <ImageBaner src={Foto} />
+                {!matches ?
+                    <Button href='#saiba-mais' variant="contained" style={{
+                        position: 'absolute', right: 60, bottom: 50, backgroundColor: "#FFB6C1", width: 200, height: 45
+                    }}>Saiba Mais
+                    </Button> : <Button href='#saiba-mais' variant="contained" style={{
+                        position: 'absolute', right: 20, bottom: 25, backgroundColor: "#FFB6C1"
+                    }}>Saiba Mais</Button>}
+            </Baner>
+            <ListAllProducts products={allProducts} />
         </>
     )
 }
+
+const Baner = styled.div`
+    position: relative;
+    width: 100%;
+    height: 100%;
+`
+
+const ImageBaner = styled.img`
+    width: 100%;
+    max-height: 450px;
+    background-color: transparent;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 5%, #FFC0CB 30%);
+    @media (max-width:600px){
+        margin-top: 25px;
+        max-height: 300px;
+        -webkit-mask-image: linear-gradient(to bottom, transparent 5%, #FFC0CB 30%);
+    }
+    box-shadow: 0 0 15px 15px rgba(0, 0, 0, 0.5);
+`
