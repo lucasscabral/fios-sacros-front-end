@@ -4,11 +4,60 @@ import styled from "styled-components"
 import AddShoppingCartOutlinedIcon from '@mui/icons-material/AddShoppingCartOutlined';
 import "../../assets/style/fonts.css"
 import { Button, Typography } from '@mui/material';
+import { Confirm } from 'notiflix/build/notiflix-confirm-aio';
+import axios from "axios";
+import API_URL from "../../utils/apiUrl";
+import { useNavigate } from "react-router-dom";
 
 function UniqueProduct({ product }) {
+    const [addProduct, setAddProduct] = useState(false)
+    const { token } = useContext(useContextAPI)
+
+    const navigate = useNavigate()
+
+    async function addProductShoppingCart(product) {
+        console.log(product)
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}` || ""
+            }
+        }
+        if (!addProduct) {
+            try {
+                await axios.post(`${API_URL}/shopping-cart/${product}`, {}, config)
+                setAddProduct(!addProduct)
+            } catch (error) {
+                console.log(error)
+                const statusError = error.response.status
+                if (statusError === 401) {
+                    return Confirm.show(
+                        'Aviso',
+                        'Para poder adicionar um produto no carrinho de compras é necessário estar logado, gostaria de se logar?',
+                        'Sim',
+                        'Não',
+                        () => {
+                            navigate("/signin")
+                        },
+                        () => {
+                        }
+                    );
+                }
+            }
+        } else {
+            try {
+                await axios.delete(`${API_URL}/product/${product}`, config)
+                setAddProduct(!addProduct)
+            } catch (error) {
+                console.log(error)
+                alert("Erro ao tentar remover um produto do carrinho de compras")
+            }
+        }
+    }
+
+
     return (
         <Product>
-            <AddShoppingCartOutlinedIcon sx={{ m: 1, color: "white", position: "absolute", width: 30, height: 30, cursor: "pointer", border: "red" }} />
+            <AddShoppingCartOutlinedIcon onClick={() => addProductShoppingCart(product.id)} sx={{ m: 1, color: `${!addProduct ? "white" : "black"}`, position: "absolute", width: 30, height: 30, cursor: "pointer", border: "red" }} />
             <ImageProduct src={product.image_url} />
             <DetailsProduct>
                 <Details>
@@ -29,21 +78,51 @@ export default function ListAllProducts({ products }) {
 
 
     return (
-        categories?.map((category) =>
-            <ListProducts>
+        categories?.map((category, id) =>
+            <ListProducts key={id}>
                 <Typography style={{
                     marginBottom: 15, marginLeft: 15, fontFamily: "'Alkalami', serif ", fontStyle: "normal",
                     fontSize: 35, color: "#606060"
                 }}>{category.name}</Typography>
                 <Products>
-                    {products?.map(product => product.categories.name === category.name ? <UniqueProduct product={product} /> : "")}
+                    {products?.map((product, id) => product.categories.name === category.name ? <UniqueProduct key={id} product={product} /> : "")}
                 </Products>
             </ListProducts>
-
         )
 
     )
 }
+
+
+Confirm.init({
+    className: 'notiflix-confirm',
+    width: '300px',
+    zindex: 4003,
+    position: 'center',
+    distance: '10px',
+    backgroundColor: '#f8f8f8',
+    borderRadius: '25px',
+    backOverlay: true,
+    backOverlayColor: 'rgba(0,0,0,0.5)',
+    rtl: false,
+    fontFamily: 'Quicksand',
+    cssAnimation: true,
+    cssAnimationDuration: 300,
+    cssAnimationStyle: 'fade',
+    plainText: true,
+    titleColor: '#FFB6C1',
+    titleFontSize: '16px',
+    titleMaxLength: 34,
+    messageColor: '#1e1e1e',
+    messageFontSize: '14px',
+    messageMaxLength: 110,
+    buttonsFontSize: '15px',
+    buttonsMaxLength: 34,
+    okButtonColor: '#f8f8f8',
+    okButtonBackground: '#FFB6C1',
+    cancelButtonColor: '#f8f8f8',
+    cancelButtonBackground: '#a9a9a9',
+});
 
 
 const ListProducts = styled.div`
@@ -56,7 +135,7 @@ const Products = styled.div`
     border-radius: 5px 5px 0 0;
     margin-left: 15px;
     overflow-x: scroll;
-    gap: 20px;
+    gap: 0 20px;
 `
 
 const Product = styled.div`
