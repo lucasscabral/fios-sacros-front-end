@@ -20,7 +20,7 @@ import { Link } from 'react-router-dom';
 
 const pages = ['Category'];
 const settings = ['Profile', 'Logout'];
-const authentication = ['SignIn', 'SignUp'];
+const authentication = ['Entrar', 'Inscreva-se'];
 
 
 const NavBar = () => {
