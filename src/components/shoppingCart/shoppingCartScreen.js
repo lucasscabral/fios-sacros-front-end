@@ -5,7 +5,6 @@ import NavBarShoppingCartScreen from "./navBarShoppingCartScreen";
 import LocalGroceryStoreOutlinedIcon from '@mui/icons-material/LocalGroceryStoreOutlined';
 import { Link } from "react-router-dom";
 import axios from "axios";
-import API_URL from "../../utils/apiUrl";
 import useContextAPI from "../../contexts/useContext";
 import ListProductsInShoppingCart from "./listProductsInShoppingCart";
 
@@ -22,7 +21,7 @@ export default function ShoppingCartScreen() {
                 Authorization: `Bearer ${token}` || ""
             }
         }
-        const allProductsShoppingCart = axios.get(`${API_URL}/shopping-cart`, config)
+        const allProductsShoppingCart = axios.get(`https://fios-sacros.herokuapp.com/shopping-cart`, config)
         allProductsShoppingCart.then(res => {
             const allProducts = res.data
             setShoppingCart(allProducts)

@@ -15,7 +15,6 @@ import Logo from "../../assets/images/logo-fios-sacros.png"
 import useContextAPI from '../../contexts/useContext';
 import LocalGroceryStoreOutlinedIcon from '@mui/icons-material/LocalGroceryStoreOutlined';
 import axios from "axios";
-import API_URL from '../../utils/apiUrl';
 import { Link } from 'react-router-dom';
 
 
@@ -59,7 +58,7 @@ export default function NavBarPrimary() {
     }
 
     useEffect(() => {
-        const getAllCategories = axios.get(`${API_URL}/categories`)
+        const getAllCategories = axios.get(`https://fios-sacros.herokuapp.com/categories`)
         getAllCategories.then((res) => {
             const categorias = res.data
             setCategories(categorias)

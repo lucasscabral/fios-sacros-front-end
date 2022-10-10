@@ -13,7 +13,6 @@ import Alert from '@mui/material/Alert';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import useContextAPI from "../../contexts/useContext";
 import axios from "axios"
-import API_URL from "../../utils/apiUrl";
 
 const theme = createTheme();
 
@@ -32,7 +31,7 @@ export default function SignIn() {
             password: data.get('password'),
         }
 
-        const promise = axios.post(`${API_URL}/signin`, bodySignIn)
+        const promise = axios.post(`https://fios-sacros.herokuapp.com/signin`, bodySignIn)
         promise.then((res) => {
             dataUser.id = res.data.id
             dataUser.name = res.data.name

@@ -12,7 +12,6 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CircularLoading from "../../utils/buttonLoading";
 import Alert from '@mui/material/Alert';
 import axios from "axios"
-import API_URL from "../../utils/apiUrl";
 
 const theme = createTheme();
 
@@ -35,7 +34,7 @@ export default function RegistrationScreen() {
             password: data.get('password'),
         }
 
-        const promise = axios.post(`${API_URL}/signup`, bodyRegistration)
+        const promise = axios.post(`https://fios-sacros.herokuapp.com/signup`, bodyRegistration)
         promise.then(_ => {
             setLoadingButtonForm(false)
             navigate("/signin")
