@@ -7,19 +7,28 @@ import "../../assets/style/fonts.css"
 import axios from "axios"
 import API_URL from '../../utils/apiUrl';
 import ListAllProducts from './listProducts.js';
+import useContextAPI from '../../contexts/useContext.js';
+import Footer from './footer.js';
+import KnowMore from './knowMore.js';
 
 export default function HomeScreen() {
     const [allProducts, setAllProducts] = useState()
+    const { token } = useContext(useContextAPI)
 
     const matches = useMediaQuery('(max-width:600px)');
     useEffect(() => {
+        // if (!token) {
         const getAllProducts = axios.get(`${API_URL}/products`)
         getAllProducts.then((res) => {
             const products = res.data
+            console.log(products)
             setAllProducts(products)
+
         }).catch(() => {
             alert("Falha ao tentar buscar todos os produtos")
         })
+        // return
+        // }
 
     }, [])
 
@@ -38,6 +47,8 @@ export default function HomeScreen() {
                     }}>Saiba Mais</Button>}
             </Baner>
             <ListAllProducts products={allProducts} />
+            <KnowMore />
+            <Footer />
         </>
     )
 }
