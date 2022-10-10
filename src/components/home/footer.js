@@ -12,7 +12,7 @@ export default function Footer() {
             <Categories>
                 <span>Categorias</span>
                 <ul>
-                    {categories?.map(category => <li>{category.name}</li>)}
+                    {categories?.map(category => <li key={category.name}>{category.name}</li>)}
                 </ul>
             </Categories>
             <Categories>
