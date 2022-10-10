@@ -6,7 +6,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import Link from "@mui/material/Link"
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container/';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -144,9 +143,7 @@ export default function RegistrationScreen() {
                             <Grid item>
 
                                 <LinkRouter to={loadingButtonForm ? "" : "/signin"} style={{ textDecoration: "none" }}>
-                                    <Link style={{ textDecoration: "none" }}>
-                                        já tem uma conta? Entrar
-                                    </Link>
+                                    já tem uma conta? Entrar
                                 </LinkRouter>
                             </Grid>
                         </Grid>
