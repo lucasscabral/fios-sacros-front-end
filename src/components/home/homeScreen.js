@@ -1,5 +1,4 @@
-import { useEffect, useState, useContext } from 'react';
-// import NavBar from "../navBar/NavBar.js"
+import { useEffect, useState } from 'react';
 import NavBar from "../navBar/navBarPrimary.js"
 import styled from "styled-components"
 import Foto from "../../assets/images/logo-fios-sacros.png"
@@ -8,13 +7,11 @@ import "../../assets/style/fonts.css"
 import axios from "axios"
 import API_URL from '../../utils/apiUrl';
 import ListAllProducts from './listProducts.js';
-import useContextAPI from '../../contexts/useContext.js';
 import Footer from './footer.js';
 import KnowMore from './knowMore.js';
 
 export default function HomeScreen() {
     const [allProducts, setAllProducts] = useState()
-    const { token } = useContext(useContextAPI)
 
     const matches = useMediaQuery('(max-width:600px)');
     useEffect(() => {

@@ -10,7 +10,6 @@ import "../assets/style/reset.css"
 export default function App() {
   const [token, setToken] = useState("")
   const [categories, setCategories] = useState()
-  const [shoppingCart, setShoppingCart] = useState()
   const [finalizePurchase, setFinalizePurchase] = useState(false)
   const [dataUser, setDataUser] = useState({
     id: "",

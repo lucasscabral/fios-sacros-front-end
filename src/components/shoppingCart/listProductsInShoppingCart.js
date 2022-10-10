@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import { Button } from "@mui/material";
-import { useContext, useState } from "react"
+import { useContext } from "react"
 import axios from "axios";
 import useContextAPI from "../../contexts/useContext";
 import API_URL from "../../utils/apiUrl";
