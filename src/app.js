@@ -1,11 +1,11 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { useState } from "react";
-import useContextAPI from "../contexts/useContext.js";
-import LoginScreen from "../components/authentication/loginScreen.js";
-import RegistrationScreen from "../components/authentication/registrationScreen.js";
-import HomeScreen from "../components/home/homeScreen.js";
-import ShoppingCartScreen from "../components/shoppingCart/shoppingCartScreen.js";
-import "../assets/style/reset.css"
+import useContextAPI from "./contexts/useContext.js";
+import LoginScreen from "./components/authentication/loginScreen.js";
+import RegistrationScreen from "./components/authentication/registrationScreen.js";
+import HomeScreen from "./components/home/homeScreen.js";
+import ShoppingCartScreen from "./components/shoppingCart/shoppingCartScreen.js";
+import "./assets/style/reset.css"
 
 export default function App() {
   const [token, setToken] = useState("")
