@@ -15,8 +15,7 @@ function UniqueProduct({ product }) {
 
     const navigate = useNavigate()
 
-    async function addProductShoppingCart(product) {
-        console.log(product)
+    async function addProductShoppingCart(productId) {
         const config = {
             headers: {
                 Authorization: `Bearer ${token}` || ""
@@ -24,10 +23,9 @@ function UniqueProduct({ product }) {
         }
         if (!addProduct) {
             try {
-                await axios.post(`${API_URL}/shopping-cart/${product}`, {}, config)
+                await axios.post(`${API_URL}/shopping-cart/${productId}`, {}, config)
                 setAddProduct(!addProduct)
             } catch (error) {
-                console.log(error)
                 const statusError = error.response.status
                 if (statusError === 401) {
                     return Confirm.show(
@@ -48,7 +46,6 @@ function UniqueProduct({ product }) {
                 await axios.delete(`${API_URL}/product/${product}`, config)
                 setAddProduct(!addProduct)
             } catch (error) {
-                console.log(error)
                 alert("Erro ao tentar remover um produto do carrinho de compras")
             }
         }
@@ -79,7 +76,7 @@ export default function ListAllProducts({ products }) {
 
     return (
         categories?.map((category, id) =>
-            <ListProducts key={id}>
+            <ListProducts id={`${category.name}`} key={id}>
                 <Typography style={{
                     marginBottom: 15, marginLeft: 15, fontFamily: "'Alkalami', serif ", fontStyle: "normal",
                     fontSize: 35, color: "#606060"

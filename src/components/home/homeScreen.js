@@ -1,5 +1,6 @@
 import { useEffect, useState, useContext } from 'react';
-import NavBar from "../navBar/navBar.js"
+// import NavBar from "../navBar/NavBar.js"
+import NavBar from "../navBar/navBarPrimary.js"
 import styled from "styled-components"
 import Foto from "../../assets/images/logo-fios-sacros.png"
 import { Button, useMediaQuery } from '@mui/material';
@@ -17,18 +18,14 @@ export default function HomeScreen() {
 
     const matches = useMediaQuery('(max-width:600px)');
     useEffect(() => {
-        // if (!token) {
         const getAllProducts = axios.get(`${API_URL}/products`)
         getAllProducts.then((res) => {
             const products = res.data
-            console.log(products)
             setAllProducts(products)
 
         }).catch(() => {
             alert("Falha ao tentar buscar todos os produtos")
         })
-        // return
-        // }
 
     }, [])
 
