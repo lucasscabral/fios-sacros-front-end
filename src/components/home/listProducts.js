@@ -23,7 +23,7 @@ function UniqueProduct({ product }) {
         }
         if (!addProduct) {
             try {
-                await axios.post(`${API_URL}/shopping-cart/${productId}`, {}, config)
+                await axios.post(`https://fios-sacros.herokuapp.com/shopping-cart/${productId}`, {}, config)
                 setAddProduct(!addProduct)
             } catch (error) {
                 const statusError = error.response.status
@@ -43,7 +43,7 @@ function UniqueProduct({ product }) {
             }
         } else {
             try {
-                await axios.delete(`${API_URL}/product/${product}`, config)
+                await axios.delete(`https://fios-sacros.herokuapp.com/product/${product}`, config)
                 setAddProduct(!addProduct)
             } catch (error) {
                 alert("Erro ao tentar remover um produto do carrinho de compras")

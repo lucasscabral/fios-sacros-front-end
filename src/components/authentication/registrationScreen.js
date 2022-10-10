@@ -140,7 +140,6 @@ export default function RegistrationScreen() {
                         </Button>}
                         <Grid container justifyContent="flex-end">
                             <Grid item>
-
                                 <LinkRouter to={loadingButtonForm ? "" : "/signin"} style={{ textDecoration: "none" }}>
                                     já tem uma conta? Entrar
                                 </LinkRouter>
