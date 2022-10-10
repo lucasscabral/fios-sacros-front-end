@@ -4,7 +4,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -113,9 +112,7 @@ export default function SignIn() {
                             </Grid>
                             <Grid item >
                                 <LinkRouter to={loadingButtonForm ? "" : "/signup"} style={{ textDecoration: "none" }}>
-                                    <Link variant="body2" style={{ textDecoration: "none" }}>
-                                        {"Não tem uma conta? Inscrever-se"}
-                                    </Link>
+                                    {"Não tem uma conta? Inscrever-se"}
                                 </LinkRouter>
                             </Grid>
                         </Grid>
