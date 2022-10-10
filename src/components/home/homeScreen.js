@@ -15,7 +15,7 @@ export default function HomeScreen() {
 
     const matches = useMediaQuery('(max-width:600px)');
     useEffect(() => {
-        const getAllProducts = axios.get(`${API_URL}/products`)
+        const getAllProducts = axios.get(`https://fios-sacros.herokuapp.com/products`)
         getAllProducts.then((res) => {
             const products = res.data
             setAllProducts(products)
