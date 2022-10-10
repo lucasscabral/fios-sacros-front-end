@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -16,13 +16,14 @@ import LocalGroceryStoreOutlinedIcon from '@mui/icons-material/LocalGroceryStore
 import { Link } from 'react-router-dom';
 
 
-const settings = ['Profile', 'Logout'];
-const authentication = ['SignIn', 'SignUp'];
-
-const NavBarShoppingCartScreen = () => {
+export default function NavBarShoppingCartScreen() {
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
     const { token, setToken, dataUser } = useContext(useContextAPI)
+
+    const settings = ['Profile', 'Logout'];
+    const authentication = ['Entrar', 'Inscreva-se'];
+
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -48,26 +49,17 @@ const NavBarShoppingCartScreen = () => {
         <AppBar position="fixed" style={{ backgroundColor: "lightpink" }}>
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        component="a"
-
-                        sx={{
-                            mr: 2,
+                    <Link to={"/"}>
+                        <Avatar alt='logo' src={Logo} sx={{
+                            width: 60, height: 60, mr: 2,
                             display: { xs: 'none', md: 'flex' },
                             fontFamily: 'monospace',
                             fontWeight: 700,
                             letterSpacing: '.3rem',
                             color: 'inherit',
                             textDecoration: 'none',
-                        }}
-                    >
-                        <Link to={"/"}>
-                            <Avatar alt='logo' src={Logo} sx={{ width: 60, height: 60 }} />
-                        </Link>
-                    </Typography>
-
+                        }} />
+                    </Link>
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                         <IconButton
                             size="large"
@@ -150,10 +142,10 @@ const NavBarShoppingCartScreen = () => {
                         >
                             {token === "" ? authentication.map((auth) => (
                                 <MenuItem key={auth} >
-                                    {auth === 'SignIn' ? <Link to={"/signin"} style={{ textDecoration: "none", color: "black" }}>
-                                        <Typography textAlign="center">{auth}</Typography>
-                                    </Link> : <Link to={"/signup"} style={{ textDecoration: "none", color: "black" }}>
-                                        <Typography textAlign="center">{auth}</Typography>
+                                    {auth === 'Entrar' ? <Link to={"/signin"} style={{ textDecoration: "none", color: "black", textAlign: "center" }}>
+                                        {auth}
+                                    </Link> : <Link to={"/signup"} style={{ textDecoration: "none", color: "black", textAlign: "center" }}>
+                                        {auth}
                                     </Link>}
                                 </MenuItem>
                             )) : settings.map((setting) => (
@@ -167,5 +159,4 @@ const NavBarShoppingCartScreen = () => {
             </Container>
         </AppBar >
     );
-};
-export default NavBarShoppingCartScreen;
+}
