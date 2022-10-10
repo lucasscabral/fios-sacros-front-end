@@ -102,7 +102,7 @@ const NavBar = () => {
                             aria-label="account of current user"
                             aria-controls="menu-appbar"
                             aria-haspopup="true"
-                            onClick={handleOpenNavMenu}
+                            onClick={handleClick}
                             color="inherit"
                         >
                             <MenuIcon />
@@ -120,14 +120,14 @@ const NavBar = () => {
                                 horizontal: 'left',
                             }}
                             open={Boolean(anchorElNav)}
-                            onClose={handleCloseNavMenu}
+                            onClose={handleClose}
                             sx={{
                                 display: { xs: 'block', md: 'none' },
                             }}
                         >
-                            {pages.map((page) => (
-                                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                    <Typography textAlign="center">{page}</Typography>
+                            {categories?.map((category) => (
+                                <MenuItem key={category?.id} onClick={handleClose}>
+                                    <Typography textAlign="center" ><a style={{ textDecoration: "none", color: "black" }} href={`#${category?.name}`}>{category?.name}</a></Typography>
                                 </MenuItem>
                             ))}
                         </Menu>
@@ -192,7 +192,7 @@ const NavBar = () => {
                                     >
                                         {categories?.map((category) => (
                                             <MenuItem key={category?.id} onClick={handleClose}>
-                                                <Typography textAlign="center" >{category?.name}</Typography>
+                                                <Typography textAlign="center" ><a style={{ textDecoration: "none", color: "black" }} href={`#${category?.name}`}>{category?.name}</a></Typography>
                                             </MenuItem>
                                         ))}
                                     </Menu>
@@ -230,11 +230,12 @@ const NavBar = () => {
                         >
                             {token === "" ? authentication.map((auth) => (
                                 <MenuItem key={auth} >
-                                    {auth === 'SignIn' ? <Link to={"/signin"} style={{ textDecoration: "none", color: "black" }}>
-                                        <Typography textAlign="center">{auth}</Typography>
-                                    </Link> : <Link to={"/signup"} style={{ textDecoration: "none", color: "black" }}>
-                                        <Typography textAlign="center">{auth}</Typography>
-                                    </Link>}
+                                    {auth === 'Entrar' ?
+                                        <Link to={"/signin"} style={{ textDecoration: "none", color: "black" }}>
+                                            <Typography textAlign="center">{auth}</Typography>
+                                        </Link> : <Link to={"/signup"} style={{ textDecoration: "none", color: "black" }}>
+                                            <Typography textAlign="center">{auth}</Typography>
+                                        </Link>}
                                 </MenuItem>
                             )) : settings.map((setting) => (
                                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
