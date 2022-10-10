@@ -6,7 +6,7 @@ import "../../assets/style/fonts.css"
 
 export default function Footer() {
     const { categories } = useContext(useContextAPI)
-    console.log(categories)
+
     return (
         <FooterPage>
             <Categories>
