@@ -4,7 +4,6 @@ import { Button } from "@mui/material";
 import { useContext } from "react"
 import axios from "axios";
 import useContextAPI from "../../contexts/useContext";
-import API_URL from "../../utils/apiUrl";
 import { Report } from 'notiflix/build/notiflix-report-aio';
 import { Confirm } from 'notiflix/build/notiflix-confirm-aio';
 
@@ -22,7 +21,7 @@ function removeProductInShoppingCart(productId, token, deleteProduct, setDeleteP
         'Sim',
         'Não',
         () => {
-            const deleteUniqueProduct = axios.delete(`${API_URL}/product/${productId}`, config)
+            const deleteUniqueProduct = axios.delete(`https://fios-sacros.herokuapp.com/product/${productId}`, config)
             deleteUniqueProduct.then((_) => {
                 setDeleteProduct(!deleteProduct)
             }).catch((error) => {
@@ -60,7 +59,7 @@ function finalizePurchaseAll(priceTotal, token, finalizePurchase, setFinalizePur
         }
     }
 
-    const finalizePurchases = axios.delete(`${API_URL}/delete-shopping-cart`, config)
+    const finalizePurchases = axios.delete(`https://fios-sacros.herokuapp.com/delete-shopping-cart`, config)
     finalizePurchases.then((res) => {
 
         Report.success(
