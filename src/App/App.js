@@ -7,10 +7,11 @@ import HomeScreen from "../components/home/homeScreen.js";
 import ShoppingCartScreen from "../components/shoppingCart/shoppingCartScreen.js";
 import "../assets/style/reset.css"
 
-function App() {
+export default function App() {
   const [token, setToken] = useState("")
   const [categories, setCategories] = useState()
   const [shoppingCart, setShoppingCart] = useState()
+  const [finalizePurchase, setFinalizePurchase] = useState(false)
   const [dataUser, setDataUser] = useState({
     id: "",
     name: "",
@@ -18,7 +19,7 @@ function App() {
   })
 
   return (
-    <useContextAPI.Provider value={{ token, setToken, dataUser, setDataUser, categories, setCategories }}>
+    <useContextAPI.Provider value={{ token, setToken, dataUser, setDataUser, categories, setCategories, finalizePurchase, setFinalizePurchase }}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomeScreen />} />
@@ -30,5 +31,3 @@ function App() {
     </useContextAPI.Provider>
   )
 }
-
-export default App;
