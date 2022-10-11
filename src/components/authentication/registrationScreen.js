@@ -107,6 +107,7 @@ export default function RegistrationScreen() {
                                     id="email"
                                     label="Email"
                                     name="email"
+                                    type="email"
                                     disabled={loadingButtonForm}
                                     autoComplete="email"
                                 />
